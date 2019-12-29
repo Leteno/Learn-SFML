@@ -4,6 +4,12 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Timber!!!", sf::Style::Fullscreen);
 
+    sf::Texture textureBackground;
+    textureBackground.loadFromFile("graphics/background.png");
+    sf::Sprite spriteBackground;
+    spriteBackground.setTexture(textureBackground);
+    spriteBackground.setPosition(0, 0);
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -17,6 +23,9 @@ int main()
         }
 
         window.clear();
+
+        window.draw(spriteBackground);
+
         window.display();
     }
 

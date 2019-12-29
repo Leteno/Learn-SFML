@@ -9,6 +9,14 @@
 sudo apt-get install libsfml-dev
 ```
 
+Download SFML_SDK from [here](https://www.sfml-dev.org/download.php), extract it and export the path
+
+```
+export SFML_LIB_PATH=<Path you extract the SDK>/lib
+```
+
+you could add it to `~/.bashrc` for easy usage.
+
 ### Timber
 
 ```

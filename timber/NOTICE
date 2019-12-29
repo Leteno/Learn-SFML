@@ -1,0 +1,13 @@
+
+# ./timber: error while loading shared libraries: libsfml-graphics.so.2.5: cannot open shared object file: No such file or directory
+
+I found that:
+* if I use `-L~/path/to/sfml`, it will work fine
+* if I use `-L/home/username/path/to/sfml`, it will show this error.
+
+Finally, I modify my export code:
+```
+export SFML_LIB_PATH='~/path/to/sfml'
+```
+
+And the problem is fixed. Just mark it.

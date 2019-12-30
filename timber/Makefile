@@ -1,5 +1,5 @@
 
-GCC=g++
+GCC=g++ -g
 ## ~/Software/SFML-2.5.1-linux-gcc-64-bit/lib
 
 timber: sfml_dep

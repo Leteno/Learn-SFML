@@ -40,9 +40,10 @@ int main()
     spriteCloud1.setTexture(textureCloud);
     spriteCloud2.setTexture(textureCloud);
     spriteCloud3.setTexture(textureCloud);
-    spriteCloud1.setPosition(randInt(10, WINDOW_WIDTH) - 200, 0);
-    spriteCloud2.setPosition(randInt(20, WINDOW_WIDTH) - 200, 250);
-    spriteCloud3.setPosition(randInt(30, WINDOW_WIDTH) - 200, 500);
+    int cloudWidth = 400;
+    spriteCloud1.setPosition(randInt(10, WINDOW_WIDTH) - cloudWidth, 0);
+    spriteCloud2.setPosition(randInt(20, WINDOW_WIDTH) - cloudWidth, 250);
+    spriteCloud3.setPosition(randInt(30, WINDOW_WIDTH) - cloudWidth, 500);
 
     bool cloud1Active = false;
     bool cloud2Active = false;
@@ -110,6 +111,10 @@ int main()
             );
             if (spriteCloud1.getPosition().x > WINDOW_WIDTH)
             {
+                spriteCloud1.setPosition(
+                    -cloudWidth,
+                    spriteCloud1.getPosition().y
+                );
                 cloud1Active = false;
             }
         }
@@ -117,7 +122,7 @@ int main()
         if (!cloud2Active)
         {
             cloud2Speed = randInt(20, 200) + 1;
-            float height = randInt(20, 300) - 150;
+            float height = randInt(20, 300) + 150;
             spriteCloud2.setPosition(spriteCloud2.getPosition().x, height);
             cloud2Active = true;
         }
@@ -129,6 +134,10 @@ int main()
             );
             if (spriteCloud2.getPosition().x > WINDOW_WIDTH)
             {
+                spriteCloud2.setPosition(
+                    -cloudWidth,
+                    spriteCloud2.getPosition().y
+                );
                 cloud2Active = false;
             }
         }
@@ -136,7 +145,7 @@ int main()
         if (!cloud3Active)
         {
             cloud3Speed = randInt(30, 200) + 1;
-            float height = randInt(30, 450) - 150;
+            float height = randInt(30, 450) + 150;
             spriteCloud3.setPosition(spriteCloud3.getPosition().x, height);
             cloud3Active = true;
         }
@@ -148,6 +157,10 @@ int main()
             );
             if (spriteCloud3.getPosition().x > WINDOW_WIDTH)
             {
+                spriteCloud3.setPosition(
+                    -cloudWidth,
+                    spriteCloud3.getPosition().y
+                );
                 cloud3Active = false;
             }
         }

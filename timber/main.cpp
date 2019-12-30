@@ -46,6 +46,8 @@ int main()
     float cloud2Speed = 0.0f;
     float cloud3Speed = 0.0f;
 
+    sf::Clock clock;
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -55,6 +57,34 @@ int main()
                 sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             {
                 window.close();
+            }
+        }
+
+        /**
+         * Update the scene
+         */
+        sf::Time dt = clock.restart();
+
+        if (!beeActive)
+        {
+            srand((int)time(0) * 10);
+            beeSpeed = (rand() % 200) + 200;
+
+            srand((int)time(0) * 10);
+            float height = (rand() % 500) + 500;
+            spriteBee.setPosition(2000, height);
+            beeActive = true;
+        }
+        else
+        {
+            spriteBee.setPosition(
+                spriteBee.getPosition().x - (beeSpeed * dt.asSeconds()),
+                spriteBee.getPosition().y
+            );
+
+            if (spriteBee.getPosition().x < -100)
+            {
+                beeActive = false;
             }
         }
 

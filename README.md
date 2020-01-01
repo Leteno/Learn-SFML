@@ -23,3 +23,9 @@ you could add it to `~/.bashrc` for easy usage.
 cd timber/
 make && ./timber
 ```
+
+### zombies_arena
+```
+cd zombies_arena/
+make && ./zombies
+```

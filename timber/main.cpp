@@ -1,3 +1,5 @@
+
+#include <sstream>
 #include <SFML/Graphics.hpp>
 
 #define WINDOW_WIDTH 1920
@@ -51,6 +53,26 @@ int main()
     float cloud1Speed = 0.0f;
     float cloud2Speed = 0.0f;
     float cloud3Speed = 0.0f;
+
+    int score = 0;
+    sf::Text messageText;
+    sf::Text scoreText;
+    sf::Font font;
+    font.loadFromFile("fonts/KOMIKAP.ttf");
+    messageText.setFont(font);
+    scoreText.setFont(font);
+    messageText.setString("Press Enter to start!");
+    scoreText.setString("Score = 0");
+    messageText.setCharacterSize(75);
+    scoreText.setCharacterSize(100);
+    messageText.setFillColor(sf::Color::White);
+    scoreText.setFillColor(sf::Color::White);
+
+    sf::FloatRect textRect = messageText.getLocalBounds();
+    messageText.setOrigin(textRect.left + textRect.width / 2.0f,
+                          textRect.top + textRect.height / 2.0f);
+    messageText.setPosition(WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f);
+    scoreText.setPosition(20, 20);
 
     sf::Clock clock;
 
@@ -173,6 +195,11 @@ int main()
                 cloud3Active = false;
             }
         }
+
+        // Update the score text
+        std::stringstream ss;
+        ss << "Score = " << score;
+        scoreText.setString(ss.str());
         } // End of paused
 
         window.clear();
@@ -186,6 +213,12 @@ int main()
         window.draw(spriteTree);
 
         window.draw(spriteBee);
+
+        window.draw(scoreText);
+        if (paused)
+        {
+            window.draw(messageText);
+        }
 
         window.display();
     }

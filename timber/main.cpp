@@ -13,6 +13,9 @@ sf::Sprite branches[NUM_BRANCHES];
 enum class side {LEFT, RIGHT, NONE};
 side branchPositions[NUM_BRANCHES];
 
+sf::Text messageText;
+void updateMessageText(std::string message);
+
 int main()
 {
     sf::VideoMode vm(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -61,7 +64,6 @@ int main()
     float cloud3Speed = 0.0f;
 
     int score = 0;
-    sf::Text messageText;
     sf::Text scoreText;
     sf::Font font;
     font.loadFromFile("fonts/KOMIKAP.ttf");
@@ -114,10 +116,12 @@ int main()
     side playerSide = side::LEFT;
 
     sf::Texture textureRIP;
-    textureRIP.loadFromFile("graphcis/rip.png");
+    textureRIP.loadFromFile("graphics/rip.png");
     sf::Sprite spriteRIP;
     spriteRIP.setTexture(textureRIP);
     spriteRIP.setPosition(600, 860);
+    const float RIP_POSITION_LEFT = 580;
+    const float RIP_POSITION_RIGHT = 1200;
 
     sf::Texture textureAxe;
     textureAxe.loadFromFile("graphics/axe.png");
@@ -368,6 +372,18 @@ int main()
             }
         }
 
+        if (branchPositions[NUM_BRANCHES - 1] == playerSide)
+        {
+            paused = true;
+            acceptInput = false;
+
+            int ripX = playerSide == side::LEFT ? RIP_POSITION_LEFT : RIP_POSITION_RIGHT;
+            spriteRIP.setPosition(ripX, 760);
+            spritePlayer.setPosition(2000, 660);
+
+            updateMessageText("SQUISHED!!");
+        }
+
         } // End of paused
 
         window.clear();
@@ -434,4 +450,16 @@ void updateBranches(int seed)
     default:
         branchPositions[0] = side::NONE;
     }
+}
+
+void updateMessageText(std::string message)
+{
+
+    messageText.setString(message);
+
+    sf::FloatRect textRect = messageText.getLocalBounds();
+
+    messageText.setOrigin(textRect.left + textRect.width / 2.0f,
+                            textRect.top + textRect.height / 2.0f);
+    messageText.setPosition(WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f);
 }

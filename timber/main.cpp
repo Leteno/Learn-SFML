@@ -54,6 +54,8 @@ int main()
 
     sf::Clock clock;
 
+    bool paused = true;
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -64,8 +66,15 @@ int main()
             {
                 window.close();
             }
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+            {
+                paused = false;
+            }
         }
 
+        if (!paused)
+        {
         /**
          * Update the scene
          */
@@ -164,6 +173,7 @@ int main()
                 cloud3Active = false;
             }
         }
+        } // End of paused
 
         window.clear();
 

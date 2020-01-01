@@ -1,6 +1,7 @@
 
 #include <sstream>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 1080
@@ -144,6 +145,21 @@ int main()
 
     bool acceptInput = false;
 
+    sf::SoundBuffer chopBuffer;
+    chopBuffer.loadFromFile("sound/chop.wav");
+    sf::Sound chop;
+    chop.setBuffer(chopBuffer);
+
+    sf::SoundBuffer deathBuffer;
+    deathBuffer.loadFromFile("sound/death.wav");
+    sf::Sound death;
+    death.setBuffer(deathBuffer);
+
+    sf::SoundBuffer ootBuffer;
+    ootBuffer.loadFromFile("sound/out_of_time.wav");
+    sf::Sound outOfTime;
+    outOfTime.setBuffer(ootBuffer);
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -196,6 +212,7 @@ int main()
                     logActive = true;
 
                     acceptInput = false;
+                    chop.play();
                 }
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
@@ -212,6 +229,7 @@ int main()
                     logActive = true;
 
                     acceptInput = false;
+                    chop.play();
                 }
             }
         }
@@ -238,6 +256,8 @@ int main()
             messageText.setOrigin(textRect.left + textRect.width / 2.0f,
                                   textRect.top + textRect.height / 2.0f);
             messageText.setPosition(WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f);
+
+            outOfTime.play();
         }
 
         // manage bee
@@ -382,6 +402,7 @@ int main()
             spritePlayer.setPosition(2000, 660);
 
             updateMessageText("SQUISHED!!");
+            death.play();
         }
 
         } // End of paused

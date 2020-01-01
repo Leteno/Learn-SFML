@@ -4,7 +4,7 @@ GCC=g++ -g
 
 timber: sfml_dep
 	$(GCC) -c main.cpp
-	$(GCC) main.o -o timber -L${SFML_LIB_PATH} -lsfml-graphics -lsfml-window -lsfml-system
+	$(GCC) main.o -o timber -L${SFML_LIB_PATH} -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 sfml_dep:
 	if [ "${SFML_LIB_PATH}" = "" ]; then echo "need to export SFML_LIB_PATH"; exit 1; fi

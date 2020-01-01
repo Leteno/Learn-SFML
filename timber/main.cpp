@@ -105,6 +105,39 @@ int main()
         branches[i].setOrigin(220, 20);
     }
 
+    sf::Texture texturePlayer;
+    texturePlayer.loadFromFile("graphics/player.png");
+    sf::Sprite spritePlayer;
+    spritePlayer.setTexture(texturePlayer);
+    spritePlayer.setPosition(580, 720);
+
+    side playerSide = side::LEFT;
+
+    sf::Texture textureRIP;
+    textureRIP.loadFromFile("graphcis/rip.png");
+    sf::Sprite spriteRIP;
+    spriteRIP.setTexture(textureRIP);
+    spriteRIP.setPosition(600, 860);
+
+    sf::Texture textureAxe;
+    textureAxe.loadFromFile("graphics/axe.png");
+    sf::Sprite spriteAxe;
+    spriteAxe.setTexture(textureAxe);
+    spriteAxe.setPosition(700, 830);
+
+    const float AXE_POSITION_LEFT = 700;
+    const float AXE_POSITION_RIGHT = 1075;
+
+    sf::Texture textureLog;
+    textureLog.loadFromFile("graphics/log.png");
+    sf::Sprite spriteLog;
+    spriteLog.setTexture(textureLog);
+    spriteLog.setPosition(810, 720);
+
+    bool logActive = false;
+    float logSpeedX = 1000;
+    float logSpeedY = -1500;
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -285,6 +318,11 @@ int main()
         }
 
         window.draw(spriteTree);
+
+        window.draw(spritePlayer);
+        window.draw(spriteAxe);
+        window.draw(spriteLog);
+        window.draw(spriteRIP);
 
         window.draw(spriteBee);
 

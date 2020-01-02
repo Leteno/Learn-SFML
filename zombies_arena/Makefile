@@ -3,9 +3,9 @@ GCC=g++ -g
 LIBRARY=-L${SFML_LIB_PATH} -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 ## ~/Software/SFML-2.5.1-linux-gcc-64-bit/lib
 
-zombie: sfml_dep player CreateBackground TextureHolder Zombie CreateHorde Bullet
+zombie: sfml_dep player CreateBackground TextureHolder Zombie CreateHorde Bullet Pickup
 	$(GCC) -c ZombieArena.cpp
-	$(GCC) ZombieArena.o Player.o CreateBackground.o TextureHolder.o Zombie.o CreateHorde.o Bullet.o -o zombie $(LIBRARY)
+	$(GCC) ZombieArena.o Player.o CreateBackground.o TextureHolder.o Zombie.o CreateHorde.o Bullet.o Pickup.o -o zombie $(LIBRARY)
 
 player: Player.cpp Player.h
 	$(GCC) -c Player.cpp
@@ -24,6 +24,9 @@ CreateHorde: CreateHorde.cpp
 
 Bullet: Bullet.cpp Bullet.h
 	$(GCC) -c Bullet.cpp
+
+Pickup: Pickup.cpp Pickup.h
+	$(GCC) -c Pickup.cpp
 
 sfml_dep:
 	if [ "${SFML_LIB_PATH}" = "" ]; then echo "need to export SFML_LIB_PATH"; exit 1; fi

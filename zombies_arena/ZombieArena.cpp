@@ -32,8 +32,7 @@ int main()
     IntRect arena;
 
     VertexArray background;
-    Texture textureBackground;
-    textureBackground.loadFromFile("graphics/background_sheet.png");
+    Texture textureBackground = TextureHolder::GetTexture("graphics/background_sheet.png");
 
     int numZombies;
     int numZombiesAlive;

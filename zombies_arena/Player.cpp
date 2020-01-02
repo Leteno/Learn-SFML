@@ -1,5 +1,6 @@
 #include "math.h"
 #include "Player.h"
+#include "TextureHolder.h"
 
 Player::Player()
 {
@@ -7,8 +8,7 @@ Player::Player()
     m_Health = START_HEALTH;
     m_MaxHealth = START_HEALTH;
 
-    m_Texture.loadFromFile("graphics/player.png");
-    m_Sprite.setTexture(m_Texture);
+    m_Sprite.setTexture(TextureHolder::GetTexture("graphics/player.png"));
     m_Sprite.setOrigin(25, 25);
 }
 

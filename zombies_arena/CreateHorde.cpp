@@ -13,7 +13,7 @@ Zombie* createHorde(int numZombies, IntRect arena)
     for (int i = 0; i < numZombies; i++)
     {
         srand((int)time(0) * i);
-        int side = (rand() * 4);
+        int side = (rand() % 4);
         float x, y;
 
         switch (side)

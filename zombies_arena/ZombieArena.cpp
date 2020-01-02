@@ -2,6 +2,7 @@
 #include "ZombieArena.h"
 #include "Player.h"
 #include "TextureHolder.h"
+#include "Bullet.h"
 
 using namespace sf;
 
@@ -38,6 +39,15 @@ int main()
     int numZombiesAlive;
     Zombie* zombies = nullptr;
 
+    const int BULLET_ARRAY_SIZE = 100;
+    Bullet bullets[BULLET_ARRAY_SIZE];
+    int currentBullet = 0;
+    int bulletsSpare = 24;
+    int bulletsInClip = 6;
+    int clipSize = 6;
+    float fireRate = 1;
+    Time lastPressed;
+
     while (window.isOpen())
     {
         Event event;
@@ -64,6 +74,23 @@ int main()
 
                 if (state == State::PLAYING)
                 {
+                    // Reloading
+                    if (event.key.code == Keyboard::R)
+                    {
+                        if (bulletsSpare >= clipSize)
+                        {
+                            bulletsInClip = clipSize;
+                            bulletsSpare -= clipSize;
+                        }
+                        else if (bulletsSpare > 0)
+                        {
+                            bulletsInClip = bulletsSpare;
+                            bulletsSpare = 0;
+                        }
+                        else
+                        {
+                        }
+                    }
                 }
             }
         }// End event polling
@@ -108,6 +135,25 @@ int main()
             else
             {
                 player.stopRight();
+            }
+
+            if (Mouse::isButtonPressed(sf::Mouse::Left))
+            {
+                if (gameTimeTotal.asMicroseconds() - lastPressed.asMicroseconds() > 1000 / fireRate &&
+                    bulletsInClip > 0)
+                {
+                    bullets[currentBullet].shoot(
+                        player.getCenter().x, player.getCenter().y,
+                        mouseWorldPosition.x, mouseWorldPosition.y);
+
+                    currentBullet++;
+                    if (currentBullet >= BULLET_ARRAY_SIZE)
+                    {
+                        currentBullet = 0;
+                    }
+                    lastPressed = gameTimeTotal;
+                    bulletsInClip--;
+                }
             }
         }// End WASD while playing
 
@@ -183,6 +229,14 @@ int main()
                     zombies[i].update(dt.asSeconds(), playerPosition);
                 }
             }
+
+            for (int i = 0; i < BULLET_ARRAY_SIZE; i++)
+            {
+                if (bullets[i].isInFlight())
+                {
+                    bullets[i].update(dtAsSeconds);
+                }
+            }
         }// End updating the scene
 
         // Draw the scene
@@ -197,6 +251,14 @@ int main()
             for (int i = 0; i < numZombies; i++)
             {
                 window.draw(zombies[i].getSprite());
+            }
+
+            for (int i = 0; i < BULLET_ARRAY_SIZE; i++)
+            {
+                if (bullets[i].isInFlight())
+                {
+                    window.draw(bullets[i].getShape());
+                }
             }
 
             window.draw(player.getSprite());

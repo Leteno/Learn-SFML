@@ -286,6 +286,36 @@ int main()
                     }
                 }
             }// End zombie being shot
+
+            for (int i = 0; i < numZombies; i++)
+            {
+                if (player.getPosition().intersects(zombies[i].getPosition()) &&
+                    zombies[i].isAlive())
+                {
+                    if (player.hit(gameTimeTotal))
+                    {
+                        // More here later
+                    }
+                    if (player.getHealth() <= 0)
+                    {
+                        state = State::GAME_OVER;
+                    }
+                }
+            } // End player touched
+
+            // Has the player touched health pickup
+            if (player.getPosition().intersects(healthPickup.getPosition()) &&
+                healthPickup.isSpawned())
+            {
+                player.increaseHealthLevel(healthPickup.gotIt());
+            }
+
+            // Has the player touched ammo pickup
+            if (player.getPosition().intersects(ammoPickup.getPosition()) &&
+                ammoPickup.isSpawned())
+            {
+                bulletsSpare += ammoPickup.gotIt();
+            }
         }// End updating the scene
 
         // Draw the scene

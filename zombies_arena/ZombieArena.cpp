@@ -48,6 +48,12 @@ int main()
     float fireRate = 1;
     Time lastPressed;
 
+    window.setMouseCursorVisible(false);
+    Sprite spriteCrosshair;
+    Texture textureCrosshair = TextureHolder::GetTexture("graphics/crosshair.png");
+    spriteCrosshair.setTexture(textureCrosshair);
+    spriteCrosshair.setOrigin(25, 25);
+
     while (window.isOpen())
     {
         Event event;
@@ -216,6 +222,7 @@ int main()
             float dtAsSeconds = dt.asSeconds();
             mouseScreenPosition = Mouse::getPosition();
             mouseWorldPosition = window.mapPixelToCoords(Mouse::getPosition(), mainView);
+            spriteCrosshair.setPosition(mouseWorldPosition);
 
             player.update(dtAsSeconds, Mouse::getPosition());
 
@@ -262,6 +269,7 @@ int main()
             }
 
             window.draw(player.getSprite());
+            window.draw(spriteCrosshair);
         }
 
         if (state == State::LEVELING_UP)

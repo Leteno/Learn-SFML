@@ -58,6 +58,9 @@ int main()
     Pickup healthPickup(1);
     Pickup ammoPickup(2);
 
+    int score = 0;
+    int hiScore = 0;
+
     while (window.isOpen())
     {
         Event event;
@@ -254,6 +257,35 @@ int main()
 
             healthPickup.update(dtAsSeconds);
             ammoPickup.update(dtAsSeconds);
+
+            for (int i = 0; i < BULLET_ARRAY_SIZE; i++)
+            {
+                for (int j = 0; j < numZombies; j++)
+                {
+                    if (bullets[i].isInFlight() &&
+                        zombies[j].isAlive())
+                    {
+                        if (bullets[i].getPosition().intersects(zombies[j].getPosition()))
+                        {
+                            bullets[i].stop();
+                            if (zombies[j].hit())
+                            {
+                                score += 10;
+                                if (score >= hiScore)
+                                {
+                                    hiScore = score;
+                                }
+                                numZombiesAlive--;
+
+                                if (numZombiesAlive == 0)
+                                {
+                                    state = State::LEVELING_UP;
+                                }
+                            }
+                        }
+                    }
+                }
+            }// End zombie being shot
         }// End updating the scene
 
         // Draw the scene
